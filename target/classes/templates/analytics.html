@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Analytics</title>
+</head>
+<body>
+
+<!-- Page heading -->
+<h1>Analytics</h1>
+
+<!--
+    Form to filter analytics data by date/time range.
+    - The "start" and "end" fields use HTML5 datetime-local inputs.
+    - The values are pre-filled using Thymeleaf model attributes `${start}` and `${end}`.
+    - Submitting this form sends a GET request to the same URL (/analytics).
+-->
+<form method="get">
+    From: <input type="datetime-local" name="start" th:value="${start}">
+    To: <input type="datetime-local" name="end" th:value="${end}">
+    <button type="submit">Filter</button>
+</form>
+
+<!--
+    Display the number of tasks created in the selected date/time range.
+    The value is rendered dynamically from the `${createdCount}` model attribute.
+-->
+<p>Tasks created in range: <b th:text="${createdCount}"></b></p>
+
+<!--
+    Display the number of tasks completed in the selected date/time range.
+    The value is rendered dynamically from the `${completedCount}` model attribute.
+-->
+<p>Tasks completed in range: <b th:text="${completedCount}"></b></p>
+
+<!--
+    Link to navigate back to the main task list (index page).
+-->
+<a href="/">Back to list</a>
+</body>
+</html>

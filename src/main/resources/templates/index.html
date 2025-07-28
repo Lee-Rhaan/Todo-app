@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>To-Do List</title>
+
+    <!-- Inline CSS styles for task layout, completed state, and basic styling -->
+    <style>
+        ul {
+            padding-left: 0;
+        }
+
+        li {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Background color for completed tasks */
+        .completed-bg {
+            background-color: #d4edda;
+        }
+
+        /* Strike-through styling for completed task names */
+        .task-name.completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+
+        .task-name {
+            flex: 1; /* Fill available space */
+        }
+
+        .task-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Page title -->
+<h1>To-Do List</h1>
+
+<!-- Form to add a new task -->
+<form action="/add" method="post">
+    <input type="text" name="name" placeholder="New Task" required>
+    <button type="submit">Add</button>
+</form>
+
+<!-- Render list of todos using Thymeleaf loop -->
+<ul>
+    <li th:each="todo : ${todos}"
+        th:classappend="${todo.status.name() == 'COMPLETED'} ? 'completed-bg' : ''">
+        <!--
+            Each task item (li) is styled based on its completion status.
+            If completed, the 'completed-bg' class is added to give a green background.
+        -->
+
+        <!-- Display the task name, styled with strike-through if completed -->
+        <span th:text="${todo.name}"
+              th:classappend="${todo.status.name() == 'COMPLETED'} ? 'task-name completed' : 'task-name'">
+            <!-- Task name will be inserted here -->
+        </span>
+
+        <!-- Action controls: toggle checkbox and delete button -->
+        <div class="task-controls">
+
+            <!-- Form to toggle task status using a checkbox -->
+            <form th:action="@{'/toggle/' + ${todo.id}}" method="post">
+                <input type="checkbox"
+                       name="completed"
+                       th:checked="${todo.status.name() == 'COMPLETED'}"
+                       onchange="this.form.submit()" />
+                <!--
+                    Checkbox is pre-checked if task is completed.
+                    On change, the form auto-submits to toggle status.
+                -->
+            </form>
+
+            <!-- Form to delete the task -->
+            <form th:action="@{'/delete/' + ${todo.id}}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    </li>
+</ul>
+
+<!-- Link to the analytics page -->
+<a href="/analytics">Analytics</a>
+</body>
+</html>
