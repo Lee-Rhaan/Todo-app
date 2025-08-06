@@ -47,9 +47,8 @@ jobs:
       # Step 5: Run SonarCloud analysis
       - name: SonarCloud Analysis
         uses: SonarSource/sonarcloud-github-action@v2
-        with:
-          organization: lee-rhaan                          # SonarCloud org key
-          token: ${{ secrets.SONAR_TOKEN }}               # GitHub secret
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # GitHub secret
 
   # --------------------------------------------
   # Job 2: Build, Dockerize, and Deploy to Render
