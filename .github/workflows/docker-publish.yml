@@ -42,11 +42,13 @@ jobs:
 
       # Step 4: Run Tests and generate coverage report (required by SonarCloud)
       - name: Build, test & analyze with SonarCloud
-        run: mvn clean verify sonar:sonar \
-          -Dsonar.projectKey=Lee-Rhaan_Todo-app \
-          -Dsonar.organization=lee-rhaan \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn clean verify sonar:sonar \
+            -Dsonar.projectKey=Lee-Rhaan_Todo-app \
+            -Dsonar.organization=lee-rhaan \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+  
 
   # --------------------------------------------
   # Job 2: Build, Dockerize, and Deploy to Render
