@@ -44,7 +44,7 @@ jobs:
       - name: Build, test & analyze with SonarCloud
         run: |
           mvn clean verify sonar:sonar \
-            -Dsonar.projectKey=Lee-Rhaan_Todo-app \
+            -Dsonar.projectKey=lee-rhaan_todo-app \
             -Dsonar.organization=lee-rhaan \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
